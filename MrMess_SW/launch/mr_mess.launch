@@ -1,0 +1,40 @@
+<!-- Mr. Messenger Launch file -->
+
+<launch>
+    <!-- Kobuki base launch -->
+    <include file="$(find turtlebot_bringup)/launch/minimal.launch"/>      
+    
+    <!-- Joystick launch -->
+    <include file="$(find turtlebot_teleop)/launch/logitech.launch"/> 
+
+    <!-- Lidar launch -->
+    <include file="$(find rplidar_ros)/launch/rplidar_setup2.launch"/>   
+ 
+    <!-- Map server launch -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find mr_mess)/maps/map.yaml" />
+
+    <!-- Launch AMCL localization system & Initial Pose Set-->
+    <arg name="custom_amcl_launch_file" default="$(find turtlebot_navigation)/launch/includes/amcl/amcl.launch.xml"/>
+    <arg name="initial_pose_x" default="6.1"/> 
+    <arg name="initial_pose_y" default="9.7"/> 
+    <arg name="initial_pose_a" default="3.14"/>
+    <include file="$(arg custom_amcl_launch_file)">
+        <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+        <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+        <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+    </include>
+
+    <!-- Launch Move base server-->
+    <arg name="custom_param_file" default="$(find turtlebot_navigation)/param/r200_costmap_params.yaml"/>
+    <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
+        <arg name="custom_param_file" value="$(arg custom_param_file)"/>
+    </include>
+
+     <!-- Parameters -->
+    <rosparam command="load" file="$(find mr_mess)/params/mr_mess_nav_params.yaml" />      
+
+    <!-- Mr. Mess control launch file -->
+    <node pkg="mr_mess" type="mr_mess_ctrl.py" name="mr_mess_ctrl_node"  output="screen">
+    </node>
+
+</launch>

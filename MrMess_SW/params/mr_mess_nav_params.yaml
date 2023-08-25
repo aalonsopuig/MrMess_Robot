@@ -1,0 +1,11 @@
+#navigation parameters
+/navigation_velocity_smoother/speed_lim_v: 0.2
+/navigation_velocity_smoother/speed_lim_w: 0.4
+/navigation_velocity_smoother/accel_lim_v: 0.3
+/navigation_velocity_smoother/accel_lim_w: 0.4
+/navigation_velocity_smoother/decel_factor: 0.5
+/teleop_velocity_smoother/speed_lim_v: 0.2
+/teleop_velocity_smoother/speed_lim_w: 0.4
+/teleop_velocity_smoother/accel_lim_v: 0.3
+/teleop_velocity_smoother/accel_lim_w: 0.4
+/teleop_velocity_smoother/decel_factor: 0.5
